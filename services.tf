@@ -56,6 +56,13 @@ resource "google_cloud_run_service" "frontend_run" {
     latest_revision = true
   }
 
+  # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations,
+    ]
+  }
+
   depends_on = [google_project_service.apis]
 }
 
@@ -185,6 +192,13 @@ resource "google_cloud_run_service" "controller_run" {
     latest_revision = true
   }
 
+  # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations,
+    ]
+  }
+
   depends_on = [
     google_project_service.apis,
     google_secret_manager_secret_version.cloud_db_uri-latest
@@ -257,6 +271,13 @@ resource "google_cloud_run_service" "jobs_run" {
   traffic {
     percent         = 100
     latest_revision = true
+  }
+
+  # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
+  lifecycle {
+    ignore_changes = [
+      metadata.0.annotations,
+    ]
   }
 
   depends_on = [google_project_service.apis]
