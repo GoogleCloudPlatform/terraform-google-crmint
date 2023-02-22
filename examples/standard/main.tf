@@ -19,7 +19,7 @@ module "crmint" {
 
   report_usage_id           = "abcdefg"
   app_title                 = "My Local Custom App"
-  notification_sender_email = "dulacp@google.com"
+  notification_sender_email = var.caller_identity
 
   # Google Cloud Platform.
   project_id                = var.project_id
@@ -34,8 +34,9 @@ module "crmint" {
   jobs_image                = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 
   # User access management.
-  iap_support_email         = "dulacp@google.com"
+  iap_support_email         = var.caller_identity
   iap_allowed_users         = [
-                                "user:dulacp@google.com",
+                                "serviceAccount:${var.caller_identity}",
+                                # "user:me@example.com",
                               ]
 }
