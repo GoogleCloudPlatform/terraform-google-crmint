@@ -140,15 +140,3 @@ variable "jobs_image" {
   description = "Docker image uri (with tag) for the jobs service"
   default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 }
-
-
-##
-# Custom domain
-
-variable "custom_domain" {
-  description = <<EOF
-    (Optional) Custom Domain for the UI (e.g. crmint.example.com).
-    Leave this value empty to skip.
-    EOF
-  default = ""
-}
