@@ -24,7 +24,6 @@ module "crmint" {
   # Google Cloud Platform.
   project_id                = var.project_id
   region                    = var.region  # e.g. us-east1
-  zone                      = var.zone  # e.g. us-east1-c
   database_instance_name    = "crmint-3-db"
   use_vpc                   = true
 

@@ -64,11 +64,6 @@ variable "region" {
   default = "us-east1"
 }
 
-variable "zone" {
-  description = "GCP Zone"
-  default = "us-east1-c"
-}
-
 
 ##
 # Virtual Private Cloud
