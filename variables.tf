@@ -22,6 +22,7 @@ variable "report_usage_id" {
   nullable    = false
 }
 
+
 ##
 # Application config
 
