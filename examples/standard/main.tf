@@ -34,6 +34,7 @@ module "crmint" {
   jobs_image                = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 
   # User access management.
+  iap_brand_id              = var.iap_brand_id
   iap_support_email         = var.caller_identity
   iap_allowed_users         = [
                                 "serviceAccount:${var.caller_identity}",

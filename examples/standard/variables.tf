@@ -32,3 +32,8 @@ variable "zone" {
 variable "caller_identity" {
   description = "Email of the caller, used to configure IAP."
 }
+
+variable "iap_brand_id" {
+  description = "Existing IAP Brand ID."
+  default     = null
+}
