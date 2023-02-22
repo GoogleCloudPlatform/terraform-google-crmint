@@ -8,6 +8,7 @@ This example illustrates how to use the `crmint` module.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | caller\_identity | Email of the caller, used to configure IAP. | `any` | n/a | yes |
+| iap\_brand\_id | Existing IAP Brand ID. | `any` | `null` | no |
 | project\_id | The ID of the project in which to provision resources. | `string` | n/a | yes |
 | region | GCP Region | `string` | `"us-east1"` | no |
 | zone | GCP Zone | `string` | `"us-east1-c"` | no |

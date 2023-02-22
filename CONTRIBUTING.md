@@ -101,15 +101,20 @@ noninteractively, using the prepared test project.
 1. Run `make docker_run` to start the testing Docker container in
    interactive mode.
 
-1. Run `kitchen_do create <EXAMPLE_NAME>` to initialize the working
-   directory for an example module.
+1. (Optional) Run `export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project CI_PROJECT_ID --format='value(name)' | sed 's:.*/::')`
+   to retrieve the current brand id if one has already been created.
 
-1. Run `kitchen_do converge <EXAMPLE_NAME>` to apply the example module.
+1. Run `cft test run <EXAMPLE_NAME> --stage init --verbose` to initialize the
+   working directory for an example module.
 
-1. Run `kitchen_do verify <EXAMPLE_NAME>` to test the example module.
+1. Run `cft test run <EXAMPLE_NAME> --stage apply --verbose` to apply the
+   example module.
 
-1. Run `kitchen_do destroy <EXAMPLE_NAME>` to destroy the example module
-   state.
+1. Run `cft test run <EXAMPLE_NAME> --stage verify --verbose` to test the
+   example module.
+
+1. Run `cft test run <EXAMPLE_NAME> --stage teardown --verbose` to destroy the
+   example module state.
 
 ### Linting and Formatting
 

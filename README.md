@@ -74,9 +74,8 @@ Functional examples are included in the
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| app\_title | Project name to display in the UI. | `any` | n/a | yes |
+| app\_title | Project name to display in the UI. | `string` | `"CRMint App"` | no |
 | controller\_image | Docker image uri (with tag) for the controller service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"` | no |
-| custom\_domain | (Optional) Custom Domain for the UI (e.g. crmint.example.com).<br>    Leave this value empty to skip. | `string` | `""` | no |
 | database\_availability\_type | Database availability type. Defaults to one zone. | `string` | `"ZONAL"` | no |
 | database\_instance\_name | Name for the Cloud SQL instance. | `string` | `"crmint-3-db"` | no |
 | database\_name | Name of the database in your Cloud SQL instance. | `string` | `"crmintapp-db"` | no |
@@ -86,6 +85,7 @@ Functional examples are included in the
 | database\_user | Database user name. | `string` | `"crmintapp"` | no |
 | frontend\_image | Docker image uri (with tag) for the frontend service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"` | no |
 | iap\_allowed\_users | n/a | `list` | n/a | yes |
+| iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `any` | `null` | no |
 | iap\_support\_email | Support email used for configuring IAP | `any` | n/a | yes |
 | jobs\_image | Docker image uri (with tag) for the jobs service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"` | no |
 | network\_project\_id | Network GCP project to use. Defaults to `var.project_id`. | `any` | `null` | no |
@@ -95,7 +95,6 @@ Functional examples are included in the
 | region | GCP Region | `string` | `"us-east1"` | no |
 | report\_usage\_id | Report anonymous usage to our analytics to improve the tool. | `any` | n/a | yes |
 | use\_vpc | Configures the database with a private IP. Default to true. | `bool` | `true` | no |
-| zone | GCP Zone | `string` | `"us-east1-c"` | no |
 
 ## Outputs
 
