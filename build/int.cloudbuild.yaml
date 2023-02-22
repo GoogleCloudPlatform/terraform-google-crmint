@@ -21,16 +21,16 @@ steps:
   - 'TF_VAR_org_id=$_ORG_ID'
   - 'TF_VAR_folder_id=$_FOLDER_ID'
   - 'TF_VAR_billing_account=$_BILLING_ACCOUNT'
-- id: simple-example-init
+- id: standard-init
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'export TF_VAR_caller_identity=$(gcloud config get core/account) && cft test run TestStandard --stage init --verbose']
-- id: simple-example-apply
+- id: standard-apply
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'export TF_VAR_caller_identity=$(gcloud config get core/account) && cft test run TestStandard --stage apply --verbose']
-- id: simple-example-verify
+- id: standard-verify
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'export TF_VAR_caller_identity=$(gcloud config get core/account) && cft test run TestStandard --stage verify --verbose']
-- id: simple-example-teardown
+- id: standard-teardown
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
   args: ['/bin/bash', '-c', 'export TF_VAR_caller_identity=$(gcloud config get core/account) && cft test run TestStandard --stage teardown --verbose']
 tags:
