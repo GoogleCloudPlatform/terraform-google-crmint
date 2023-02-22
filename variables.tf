@@ -27,6 +27,7 @@ variable "report_usage_id" {
 
 variable "app_title" {
   description = "Project name to display in the UI."
+  default     = "CRMint App"
 }
 
 variable "notification_sender_email" {
