@@ -25,6 +25,7 @@ locals {
     "compute.googleapis.com",
     "iam.googleapis.com",
     "logging.googleapis.com",
+    "monitoring.googleapis.com",
     "pubsub.googleapis.com",
     "run.googleapis.com",
     "secretmanager.googleapis.com",

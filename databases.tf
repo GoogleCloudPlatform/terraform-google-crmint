@@ -19,7 +19,6 @@ locals {
 }
 
 resource "google_sql_database_instance" "main" {
-  depends_on = [google_service_networking_connection.private_vpc_connection]
   deletion_protection = false
 
   name             = var.database_instance_name
@@ -52,6 +51,11 @@ resource "google_sql_database_instance" "main" {
       hour = 2
     }
   }
+
+  depends_on = [
+    google_project_service.apis,
+    google_service_networking_connection.private_vpc_connection,
+  ]
 }
 
 resource "google_sql_database" "crmint" {
