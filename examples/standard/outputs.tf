@@ -18,3 +18,8 @@ output "secured_url" {
   value       = module.crmint.secured_url
   description = "The url to access CRMint UI (with Google Managed certificate)."
 }
+
+output "report_usage_id" {
+  value       = module.crmint.report_usage_id
+  description = "Report Usage ID (empty if opt-out)"
+}

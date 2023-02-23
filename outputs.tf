@@ -19,6 +19,11 @@ output "secured_url" {
   description = "The url to access CRMint UI (with Google Managed certificate)."
 }
 
+output "project_id" {
+  value       = var.project_id
+  description = "GCP Project ID"
+}
+
 output "region" {
   value       = var.region
   description = "Region used to deploy CRMint."
@@ -43,4 +48,9 @@ output "cloud_db_uri" {
 output "cloud_build_worker_pool" {
   value       = local.pool
   description = "Cloud Build worker pool."
+}
+
+output "report_usage_id" {
+  value       = local.report_usage_id
+  description = "Report Usage ID (empty if opt-out)"
 }

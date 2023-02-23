@@ -28,9 +28,10 @@ func TestStandard(t *testing.T) {
 		example.DefaultVerify(assert)
 
 		securedURL := example.GetStringOutput("secured_url")
-		//services := gcloud.Run(t, "services list", gcloud.WithCommonArgs([]string{"--project", projectID, "--format", "json"})).Array()
-		//match := utils.GetFirstMatchResult(t, services, "config.name", "storage.googleapis.com")
 		assert.NotNil(securedURL, "UI URL should be available")
+
+		reportUsageId := example.GetStringOutput("report_usage_id")
+		assert.NotEmpty(reportUsageId, "the report usage id should not be empty")
 	})
 	example.Test()
 }

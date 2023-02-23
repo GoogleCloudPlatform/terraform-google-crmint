@@ -28,10 +28,15 @@ func TestDisableVPC(t *testing.T) {
 	example.DefineVerify(func(assert *assert.Assertions) {
 		example.DefaultVerify(assert)
 
-		region := example.GetStringOutput("region")
-		vpcConnectors := gcloud.Run(t, "compute networks vpc-access connectors list", gcloud.WithCommonArgs([]string{"--region", region, "--format", "json"})).Array()
+		project := example.GetStringOutput("project_id")
+		gcloud.Run(t, "services enable vpcaccess.googleapis.com", gcloud.WithCommonArgs([]string{"--project", project, "--format", "json"}))
 
+		region := example.GetStringOutput("region")
+		vpcConnectors := gcloud.Run(t, "compute networks vpc-access connectors list", gcloud.WithCommonArgs([]string{"--project", project, "--region", region, "--format", "json"})).Array()
 		assert.Empty(vpcConnectors, "the list of vpc connectors should be empty")
+
+		reportUsageId := example.GetStringOutput("report_usage_id")
+		assert.NotEmpty(reportUsageId, "the report usage id should not be empty")
 	})
 	example.Test()
 }

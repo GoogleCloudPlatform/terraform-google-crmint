@@ -17,9 +17,9 @@
 ##
 # Report usage analytics consent
 
-variable "report_usage_id" {
+variable "report_usage" {
   description = "Report anonymous usage to our analytics to improve the tool."
-  nullable    = false
+  default     = false
 }
 
 

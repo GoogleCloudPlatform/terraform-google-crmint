@@ -17,7 +17,7 @@
 module "crmint" {
   source = "../.."
 
-  report_usage_id           = "abcdefg"
+  report_usage              = true
   app_title                 = "My Local Custom App"
   notification_sender_email = var.caller_identity
 

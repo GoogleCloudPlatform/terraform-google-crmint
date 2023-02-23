@@ -90,6 +90,15 @@ resource "google_secret_manager_secret_iam_member" "cloud_db_uri-access" {
   member    = "serviceAccount:${google_service_account.controller_sa.email}"
 }
 
+locals {
+  report_usage_id = var.report_usage ? random_integer.report_usage_id.id : ""
+}
+
+resource "random_integer" "report_usage_id" {
+  min = 1000000000
+  max = 1999999999
+}
+
 resource "google_cloud_run_service" "controller_run" {
   provider = google-beta
   name     = "controller"
@@ -142,7 +151,7 @@ resource "google_cloud_run_service" "controller_run" {
 
         env {
           name  = "REPORT_USAGE_ID"
-          value = var.report_usage_id
+          value = local.report_usage_id
         }
         env {
           name  = "APP_TITLE"
