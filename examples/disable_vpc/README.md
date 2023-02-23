@@ -17,6 +17,9 @@ This example illustrates how to use the `crmint` module wihtout the VPC feature.
 
 | Name | Description |
 |------|-------------|
+| project\_id | GCP Project ID |
+| region | Region used to deploy CRMint. |
+| report\_usage\_id | Report Usage ID (empty if opt-out) |
 | secured\_url | The url to access CRMint UI (with Google Managed certificate). |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

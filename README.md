@@ -88,12 +88,13 @@ Functional examples are included in the
 | iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `any` | `null` | no |
 | iap\_support\_email | Support email used for configuring IAP | `any` | n/a | yes |
 | jobs\_image | Docker image uri (with tag) for the jobs service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"` | no |
+| labels | A set of key/value label pairs to assign to the resources deployed by this blueprint. | `map(string)` | `{}` | no |
 | network\_project\_id | Network GCP project to use. Defaults to `var.project_id`. | `any` | `null` | no |
 | network\_region | Network region. Defaults to `var.region`. | `any` | `null` | no |
 | notification\_sender\_email | Email address to send notifications to. | `any` | n/a | yes |
 | project\_id | GCP Project ID | `any` | n/a | yes |
 | region | GCP Region | `string` | `"us-east1"` | no |
-| report\_usage\_id | Report anonymous usage to our analytics to improve the tool. | `any` | n/a | yes |
+| report\_usage | Report anonymous usage to our analytics to improve the tool. | `bool` | `false` | no |
 | use\_vpc | Configures the database with a private IP. Default to true. | `bool` | `true` | no |
 
 ## Outputs
@@ -104,7 +105,9 @@ Functional examples are included in the
 | cloud\_db\_uri | Database connection URI. |
 | migrate\_image | Docker image (with tag) for the controller service. |
 | migrate\_sql\_conn\_name | Database instance connection name. |
+| project\_id | GCP Project ID |
 | region | Region used to deploy CRMint. |
+| report\_usage\_id | Report Usage ID (empty if opt-out) |
 | secured\_url | The url to access CRMint UI (with Google Managed certificate). |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

@@ -17,6 +17,7 @@ This example illustrates how to use the `crmint` module.
 
 | Name | Description |
 |------|-------------|
+| report\_usage\_id | Report Usage ID (empty if opt-out) |
 | secured\_url | The url to access CRMint UI (with Google Managed certificate). |
 
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
