@@ -29,6 +29,7 @@ resource "google_sql_database_instance" "main" {
   settings {
     tier              = var.database_tier
     availability_type = var.database_availability_type
+    user_labels       = var.labels
 
     insights_config {
       query_insights_enabled  = true

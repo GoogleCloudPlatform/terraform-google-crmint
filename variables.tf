@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
+variable "labels" {
+  description = "A set of key/value label pairs to assign to the resources deployed by this blueprint."
+  default     = {}
+  type        = map(string)
+}
+
 ##
 # Report usage analytics consent
 

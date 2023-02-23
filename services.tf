@@ -25,6 +25,8 @@ resource "google_cloud_run_service" "frontend_run" {
       # https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress
       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
     }
+
+    labels = var.labels
   }
 
   template {
@@ -103,7 +105,7 @@ resource "google_cloud_run_service" "controller_run" {
   provider = google-beta
   name     = "controller"
   location = var.region
-  project = var.project_id
+  project  = var.project_id
 
   metadata {
     annotations = {
@@ -111,6 +113,8 @@ resource "google_cloud_run_service" "controller_run" {
       # https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress
       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
     }
+
+    labels = var.labels
   }
 
   template {
@@ -210,7 +214,7 @@ resource "google_cloud_run_service" "jobs_run" {
   provider = google-beta
   name     = "jobs"
   location = var.region
-  project = var.project_id
+  project  = var.project_id
 
   metadata {
     annotations = {
@@ -218,6 +222,8 @@ resource "google_cloud_run_service" "jobs_run" {
       # https://cloud.google.com/sdk/gcloud/reference/run/deploy#--ingress
       "run.googleapis.com/ingress" = "internal-and-cloud-load-balancing"
     }
+
+    labels = var.labels
   }
 
   template {
