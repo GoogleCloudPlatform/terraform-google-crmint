@@ -57,7 +57,8 @@ The general strategy for these tests is to verify the behaviour of the
 submodules, and example modules are all functionally correct.
 
 #### Test Environment
-The easiest way to test the module is in an isolated test project. The setup for such a project is defined in [test/setup](./test/setup/) directory.
+
+The easiest way to test the module is in an isolated test project. You can follow the steps in the colab: https://codelabs.developers.google.com/cft-onboarding/
 
 To use this setup, you need a service account with these permissions (on a Folder or Organization):
 - Project Creator
@@ -73,17 +74,59 @@ create any resources on the service account's project):
 - Service Usage
 - Identity and Access Management (IAM)
 
-Export the Service Account credentials to your environment like so:
-
-```
-export SERVICE_ACCOUNT_JSON=$(< credentials.json)
-```
-
 You will also need to set a few environment variables:
 ```
 export TF_VAR_org_id="your_org_id"
 export TF_VAR_folder_id="your_folder_id"
 export TF_VAR_billing_account="your_billing_account_id"
+```
+
+Select your master project
+
+```
+gcloud config set core/project YOUR_PROJECT_ID
+```
+
+Enable the following Google Cloud APIs on your seed project:
+
+```
+gcloud services enable cloudresourcemanager.googleapis.com
+gcloud services enable iam.googleapis.com
+gcloud services enable cloudbilling.googleapis.com
+```
+
+Create Service Account
+
+```
+gcloud iam service-accounts create cft-onboarding \
+  --description="CFT Onboarding Terraform Service Account" \
+  --display-name="CFT Onboarding"
+export SERVICE_ACCOUNT=cft-onboarding@$(gcloud config get-value core/project).iam.gserviceaccount.com
+```
+
+Grant the necessary roles
+
+```
+gcloud resource-manager folders add-iam-policy-binding ${TF_VAR_folder_id} \
+  --member="serviceAccount:${SERVICE_ACCOUNT}" \
+  --role="roles/resourcemanager.projectCreator"
+gcloud organizations add-iam-policy-binding ${TF_VAR_org_id} \
+  --member="serviceAccount:${SERVICE_ACCOUNT}" \
+  --role="roles/billing.user"
+gcloud organizations add-iam-policy-binding ${TF_VAR_org_id} \
+  --member="serviceAccount:${SERVICE_ACCOUNT}" \
+  --role="roles/resourcemanager.organizationViewer"
+gcloud alpha billing accounts add-iam-policy-binding ${TF_VAR_billing_account} \
+  --member "serviceAccount:${SERVICE_ACCOUNT}" \
+  --role roles/billing.user
+```
+
+Export the Service Account credentials to your environment like so:
+
+```
+gcloud iam service-accounts keys create cft.json --iam-account=${SERVICE_ACCOUNT}
+export SERVICE_ACCOUNT_JSON=$(< cft.json)
+rm -rf cft.json
 ```
 
 With these settings in place, you can prepare a test project using Docker:
