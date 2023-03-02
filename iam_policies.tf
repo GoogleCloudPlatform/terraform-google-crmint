@@ -15,29 +15,33 @@
  */
 
 resource "google_service_account" "frontend_sa" {
-  account_id   = "crmint-frontend-sa"
+  account_id   = var.random_suffix ? "crmint-frontend-sa-${random_id.suffix.hex}" : "crmint-frontend-sa"
   display_name = "CRMint Frontend Service Account"
+  description  = "Managed by ${local.managed_by_desc}"
   project      = var.project_id
   depends_on   = [google_project_service.apis]
 }
 
 resource "google_service_account" "jobs_sa" {
-  account_id   = "crmint-jobs-sa"
+  account_id   = var.random_suffix ? "crmint-jobs-sa-${random_id.suffix.hex}" : "crmint-jobs-sa"
   display_name = "CRMint Jobs Service Account"
+  description  = "Managed by ${local.managed_by_desc}"
   project      = var.project_id
   depends_on   = [google_project_service.apis]
 }
 
 resource "google_service_account" "controller_sa" {
-  account_id   = "crmint-controller-sa"
+  account_id   = var.random_suffix ? "crmint-controller-sa-${random_id.suffix.hex}" : "crmint-controller-sa"
   display_name = "CRMint Controller Service Account"
+  description  = "Managed by ${local.managed_by_desc}"
   project      = var.project_id
   depends_on   = [google_project_service.apis]
 }
 
 resource "google_service_account" "pubsub_sa" {
-  account_id   = "crmint-pubsub-sa"
+  account_id   = var.random_suffix ? "crmint-pubsub-sa-${random_id.suffix.hex}" : "crmint-pubsub-sa"
   display_name = "CRMint PubSub Service Account"
+  description  = "Managed by ${local.managed_by_desc}"
   project      = var.project_id
   depends_on   = [google_project_service.apis]
 }

@@ -15,7 +15,9 @@
  */
 
 resource "google_logging_metric" "pipeline_status_failed" {
-  name   = "crmint/pipeline_status_failed"
+  name        = var.random_suffix ? "crmint/pipeline_status_failed-${random_id.suffix.hex}" : "crmint/pipeline_status_failed"
+  description = "Managed by ${local.managed_by_desc}"
+
   filter = "resource.type=cloud_run_revision AND jsonPayload.log_type=PIPELINE_STATUS AND jsonPayload.labels.pipeline_status=failed"
   metric_descriptor {
     metric_kind = "DELTA"

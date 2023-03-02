@@ -15,15 +15,17 @@
  */
 
 resource "google_compute_global_address" "default" {
-  name          = "global-crmint-default"
-  address_type  = "EXTERNAL"
+  name         = var.random_suffix ? "global-crmint-default-${random_id.suffix.hex}" : "global-crmint-default"
+  description  = "Managed by ${local.managed_by_desc}"
+  address_type = "EXTERNAL"
 
   # Create a network only if the compute.googleapis.com API has been activated.
   depends_on = [google_project_service.apis]
 }
 
 resource "google_compute_region_network_endpoint_group" "frontend_neg" {
-  name                  = "frontend-neg"
+  name                  = var.random_suffix ? "frontend-neg-${random_id.suffix.hex}" : "frontend-neg"
+  description           = "Managed by ${local.managed_by_desc}"
   network_endpoint_type = "SERVERLESS"
   region                = var.region
   cloud_run {
@@ -32,7 +34,8 @@ resource "google_compute_region_network_endpoint_group" "frontend_neg" {
 }
 
 resource "google_compute_region_network_endpoint_group" "controller_neg" {
-  name                  = "controller-neg"
+  name                  = var.random_suffix ? "controller-neg-${random_id.suffix.hex}" : "controller-neg"
+  description           = "Managed by ${local.managed_by_desc}"
   network_endpoint_type = "SERVERLESS"
   region                = var.region
   cloud_run {
@@ -41,7 +44,8 @@ resource "google_compute_region_network_endpoint_group" "controller_neg" {
 }
 
 resource "google_compute_region_network_endpoint_group" "jobs_neg" {
-  name                  = "jobs-neg"
+  name                  = var.random_suffix ? "jobs-neg-${random_id.suffix.hex}" : "jobs-neg"
+  description           = "Managed by ${local.managed_by_desc}"
   network_endpoint_type = "SERVERLESS"
   region                = var.region
   cloud_run {
@@ -50,7 +54,9 @@ resource "google_compute_region_network_endpoint_group" "jobs_neg" {
 }
 
 resource "google_compute_backend_service" "frontend_backend" {
-  name                            = "crmint-frontend-backend-service"
+  name        = var.random_suffix ? "crmint-frontend-backend-service-${random_id.suffix.hex}" : "crmint-frontend-backend-service"
+  description = "Managed by ${local.managed_by_desc}"
+
   enable_cdn                      = false
   connection_draining_timeout_sec = 10
 
@@ -68,7 +74,9 @@ resource "google_compute_backend_service" "frontend_backend" {
 }
 
 resource "google_compute_backend_service" "controller_backend" {
-  name                            = "crmint-controller-backend-service"
+  name        = var.random_suffix ? "crmint-controller-backend-service-${random_id.suffix.hex}" : "crmint-controller-backend-service"
+  description = "Managed by ${local.managed_by_desc}"
+
   enable_cdn                      = false
   connection_draining_timeout_sec = 10
 
@@ -86,7 +94,9 @@ resource "google_compute_backend_service" "controller_backend" {
 }
 
 resource "google_compute_backend_service" "jobs_backend" {
-  name                            = "crmint-jobs-backend-service"
+  name        = var.random_suffix ? "crmint-jobs-backend-service-${random_id.suffix.hex}" : "crmint-jobs-backend-service"
+  description = "Managed by ${local.managed_by_desc}"
+
   enable_cdn                      = false
   connection_draining_timeout_sec = 10
 
@@ -104,7 +114,9 @@ resource "google_compute_backend_service" "jobs_backend" {
 }
 
 resource "google_compute_url_map" "default" {
-  name             = "crmint-http-lb"
+  name        = var.random_suffix ? "crmint-http-lb-${random_id.suffix.hex}" : "crmint-http-lb"
+  description = "Managed by ${local.managed_by_desc}"
+
   default_service  = google_compute_backend_service.frontend_backend.id
 
   host_rule {
@@ -129,7 +141,9 @@ resource "google_compute_url_map" "default" {
 }
 
 resource "google_compute_target_https_proxy" "default" {
-  name    = "crmint-default-https-lb-proxy"
+  name        = var.random_suffix ? "crmint-default-https-lb-proxy-${random_id.suffix.hex}" : "crmint-default-https-lb-proxy"
+  description = "Managed by ${local.managed_by_desc}"
+
   url_map = google_compute_url_map.default.id
   ssl_certificates = [
     google_compute_managed_ssl_certificate.default.id,
@@ -137,7 +151,9 @@ resource "google_compute_target_https_proxy" "default" {
 }
 
 resource "google_compute_global_forwarding_rule" "default" {
-  name = "crmint-default-https-lb-forwarding-rule"
+  name        = var.random_suffix ? "crmint-default-https-lb-forwarding-rule-${random_id.suffix.hex}" : "crmint-default-https-lb-forwarding-rule"
+  description = "Managed by ${local.managed_by_desc}"
+
   ip_protocol = "TCP"
   load_balancing_scheme = "EXTERNAL"
   port_range = "443"
@@ -152,7 +168,9 @@ resource "google_compute_network" "private" {
   provider = google-beta
   count = var.use_vpc ? 1 : 0
 
-  name                    = "crmint-private-network"
+  name        = var.random_suffix ? "crmint-private-network-${random_id.suffix.hex}" : "crmint-private-network"
+  description = "Managed by ${local.managed_by_desc}"
+
   project                 = var.network_project_id != null ? var.network_project_id : var.project_id
   routing_mode            = "REGIONAL"
   mtu                     = 1460
@@ -166,7 +184,9 @@ resource "google_compute_global_address" "db_private_ip_address" {
   provider = google-beta
   count = var.use_vpc ? 1 : 0
 
-  name          = "crmint-db-private-ip-address"
+  name        = var.random_suffix ? "crmint-db-private-ip-address-${random_id.suffix.hex}" : "crmint-db-private-ip-address"
+  description = "Managed by ${local.managed_by_desc}"
+
   project       = var.network_project_id != null ? var.network_project_id : var.project_id
   purpose       = "VPC_PEERING"
   address_type  = "INTERNAL"
@@ -187,7 +207,9 @@ resource "google_service_networking_connection" "private_vpc_connection" {
 resource "google_compute_subnetwork" "private" {
   count = var.use_vpc ? 1 : 0
 
-  name          = "crmint-private-subnetwork"
+  name        = var.random_suffix ? "crmint-private-subnetwork-${random_id.suffix.hex}" : "crmint-private-subnetwork"
+  description = "Managed by ${local.managed_by_desc}"
+
   ip_cidr_range = "10.8.0.0/28"
   region        = var.network_region != null ? var.network_region : var.region
   network       = google_compute_network.private[count.index].id
@@ -197,7 +219,8 @@ resource "google_vpc_access_connector" "connector" {
   provider       = google-beta
   count = var.use_vpc ? 1 : 0
 
-  name           = "crmint-vpc-conn"
+  name        = var.random_suffix ? "crmint-vpc-conn-${random_id.suffix.hex}" : "crmint-vpc-conn"
+
   machine_type   = "e2-micro"
   max_instances  = 3
   min_instances  = 2

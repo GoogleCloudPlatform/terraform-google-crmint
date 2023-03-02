@@ -19,7 +19,8 @@ locals {
 }
 
 resource "google_compute_managed_ssl_certificate" "default" {
-  name = "crmint-managed"
+  name        = var.random_suffix ? "crmint-managed-${random_id.suffix.hex}" : "crmint-managed"
+  description = "Managed by ${local.managed_by_desc}"
 
   managed {
     domains = [local.secured_domain]

@@ -15,7 +15,7 @@
  */
 
 resource "google_cloud_run_service" "frontend_run" {
-  name     = "frontend"
+  name     = var.random_suffix ? "frontend-${random_id.suffix.hex}" : "frontend"
   location = var.region
   project  = var.project_id
 
@@ -103,7 +103,8 @@ resource "random_integer" "report_usage_id" {
 
 resource "google_cloud_run_service" "controller_run" {
   provider = google-beta
-  name     = "controller"
+
+  name     = var.random_suffix ? "controller-${random_id.suffix.hex}" : "controller"
   location = var.region
   project  = var.project_id
 
@@ -212,7 +213,8 @@ resource "google_cloud_run_service" "controller_run" {
 
 resource "google_cloud_run_service" "jobs_run" {
   provider = google-beta
-  name     = "jobs"
+
+  name     = var.random_suffix ? "jobs-${random_id.suffix.hex}" : "jobs"
   location = var.region
   project  = var.project_id
 

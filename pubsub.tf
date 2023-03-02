@@ -38,15 +38,16 @@ locals {
 
 resource "google_pubsub_topic" "topics" {
   for_each = local.subscriptions
-  name     = each.key
-  labels   = var.labels
 
-  depends_on = [google_project_service.apis]
+  name        = var.random_suffix ? "${each.key}-${random_id.suffix.hex}" : each.key
+  labels      = var.labels
+
+  depends_on  = [google_project_service.apis]
 }
 
-resource "google_pubsub_topic" "pipeline-finished" {
-  name = "crmint-3-pipeline-finished"
-  labels   = var.labels
+resource "google_pubsub_topic" "pipeline_finished" {
+  name        = var.random_suffix ? "crmint-3-pipeline-finished-${random_id.suffix.hex}" : "crmint-3-pipeline-finished"
+  labels      = var.labels
 
   depends_on = [google_project_service.apis]
 }
@@ -58,9 +59,9 @@ resource "random_id" "pubsub_verification_token" {
 resource "google_pubsub_subscription" "subscriptions" {
   for_each = local.subscriptions
 
-  labels = var.labels
-  name   = "${each.key}-subscription"
-  topic  = lookup(google_pubsub_topic.topics, each.key).id
+  labels      = var.labels
+  name        = var.random_suffix ? "${each.key}-subscription-${random_id.suffix.hex}" : "${each.key}-subscription"
+  topic       = lookup(google_pubsub_topic.topics, each.key).id
 
   ack_deadline_seconds = each.value.ack_deadline_seconds
   expiration_policy {

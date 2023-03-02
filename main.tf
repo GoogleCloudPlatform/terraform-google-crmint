@@ -13,3 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+locals {
+  managed_by_desc = var.goog_bc_deployment_name != "" ? "Terraform" : "${var.goog_bc_deployment_name} Deployment"
+}
+
+resource "random_id" "suffix" {
+  byte_length = 2
+}

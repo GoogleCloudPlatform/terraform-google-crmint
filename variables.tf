@@ -14,12 +14,6 @@
  * limitations under the License.
  */
 
-variable "labels" {
-  description = "A set of key/value label pairs to assign to the resources deployed by this blueprint."
-  default     = {}
-  type        = map(string)
-}
-
 ##
 # Report usage analytics consent
 
@@ -146,4 +140,26 @@ variable "controller_image" {
 variable "jobs_image" {
   description = "Docker image uri (with tag) for the jobs service"
   default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
+}
+
+
+##
+# Blueprint specifics
+
+variable "random_suffix" {
+  description = "Add random suffix to deployed resources (to allow multiple deployments per project)"
+  type = string
+  default = true
+}
+
+variable "goog_bc_deployment_name" {
+  description = "This is only set if run via BC/CM"
+  type = string
+  default = ""
+}
+
+variable "labels" {
+  description = "A set of key/value label pairs to assign to the resources deployed by this blueprint."
+  default     = {}
+  type        = map(string)
 }

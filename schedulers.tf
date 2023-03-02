@@ -15,8 +15,9 @@
  */
 
 resource "google_cloud_scheduler_job" "heartbeat" {
-  name        = "crmint-heartbeat"
-  description = "Triggers scheduled pipeline runs."
+  name        = var.random_suffix ? "crmint-heartbeat-${random_id.suffix.hex}" : "crmint-heartbeat"
+  description = "Triggers scheduled pipeline runs - Managed by ${local.managed_by_desc}"
+
   schedule    = "* * * * *"
   project     = var.project_id
 

@@ -21,7 +21,8 @@ locals {
 resource "google_sql_database_instance" "main" {
   deletion_protection = false
 
-  name             = var.database_instance_name
+  name        = var.random_suffix ? "${var.database_instance_name}-${random_id.suffix.hex}" : var.database_instance_name
+
   database_version = "MYSQL_8_0"
   project          = var.database_project_id != null ? var.database_project_id : var.project_id
   region           = var.database_region != null ? var.database_region : var.region
