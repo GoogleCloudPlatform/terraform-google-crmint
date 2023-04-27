@@ -101,10 +101,7 @@ Functional examples are included in the
 
 | Name | Description |
 |------|-------------|
-| cloud\_build\_worker\_pool | Cloud Build worker pool. |
 | cloud\_db\_uri | Database connection URI. |
-| migrate\_image | Docker image (with tag) for the controller service. |
-| migrate\_sql\_conn\_name | Database instance connection name. |
 | project\_id | GCP Project ID |
 | region | Region used to deploy CRMint. |
 | report\_usage\_id | Report Usage ID (empty if opt-out) |
