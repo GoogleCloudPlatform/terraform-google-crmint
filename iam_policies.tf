@@ -53,17 +53,17 @@ resource "google_project_service_identity" "iap_managed_sa" {
 }
 
 resource "google_project_service_identity" "cloudbuild_managed_sa" {
-  provider = google-beta
-  project  = var.project_id
-  service  = "cloudbuild.googleapis.com"
-  depends_on   = [google_project_service.apis]
+  provider   = google-beta
+  project    = var.project_id
+  service    = "cloudbuild.googleapis.com"
+  depends_on = [google_project_service.apis]
 }
 
 resource "google_project_service_identity" "pubsub_managed_sa" {
-  provider = google-beta
-  project  = var.project_id
-  service  = "pubsub.googleapis.com"
-  depends_on   = [google_project_service.apis]
+  provider   = google-beta
+  project    = var.project_id
+  service    = "pubsub.googleapis.com"
+  depends_on = [google_project_service.apis]
 }
 
 resource "google_project_iam_member" "controller_sa--cloudsql-client" {
@@ -160,61 +160,73 @@ resource "google_project_iam_member" "pubsub_token-creator" {
 # NOTE: We delegate the authentication flow to IAP.
 #
 
-data "google_iam_policy" "iap_users" {
-  binding {
-    role = "roles/iap.httpsResourceAccessor"
-    members = concat(
-      ["serviceAccount:${google_service_account.pubsub_sa.email}"],
-      var.iap_allowed_users
-    )
+locals {
+  iap_users = {
+    for index, user in concat(["serviceAccount:${google_service_account.pubsub_sa.email}"], var.iap_allowed_users) :
+    "user-${index}" => user
   }
 }
 
-resource "google_iap_web_backend_service_iam_policy" "frontend" {
-  project = google_compute_backend_service.frontend_backend.project
+resource "google_iap_web_backend_service_iam_member" "frontend" {
+  for_each = local.iap_users
+
+  project             = google_compute_backend_service.frontend_backend.project
   web_backend_service = google_compute_backend_service.frontend_backend.name
-  policy_data = data.google_iam_policy.iap_users.policy_data
+  role                = "roles/iap.httpsResourceAccessor"
+  member              = each.value
 }
 
-resource "google_iap_web_backend_service_iam_policy" "controller" {
-  project = google_compute_backend_service.controller_backend.project
+resource "google_iap_web_backend_service_iam_member" "controller" {
+  for_each = local.iap_users
+
+  project             = google_compute_backend_service.controller_backend.project
   web_backend_service = google_compute_backend_service.controller_backend.name
-  policy_data = data.google_iam_policy.iap_users.policy_data
+  role                = "roles/iap.httpsResourceAccessor"
+  member              = each.value
 }
 
-resource "google_iap_web_backend_service_iam_policy" "jobs" {
-  project = google_compute_backend_service.jobs_backend.project
+resource "google_iap_web_backend_service_iam_member" "jobs" {
+  for_each = local.iap_users
+
+  project             = google_compute_backend_service.jobs_backend.project
   web_backend_service = google_compute_backend_service.jobs_backend.name
-  policy_data = data.google_iam_policy.iap_users.policy_data
+  role                = "roles/iap.httpsResourceAccessor"
+  member              = each.value
 }
 
-data "google_iam_policy" "run_users" {
-  binding {
-    role = "roles/run.invoker"
-    members = [
-        "serviceAccount:${google_project_service_identity.iap_sa.email}",
-        "serviceAccount:${google_service_account.pubsub_sa.email}",
-    ]
+locals {
+  run_users = {
+    iap_sa    = "serviceAccount:${google_project_service_identity.iap_sa.email}"
+    pubsub_sa = "serviceAccount:${google_service_account.pubsub_sa.email}"
   }
 }
 
-resource "google_cloud_run_service_iam_policy" "frontend_run-invoker" {
+resource "google_cloud_run_service_iam_member" "frontend_run-invoker" {
+  for_each = local.run_users
+
   location = google_cloud_run_service.frontend_run.location
-  project = google_cloud_run_service.frontend_run.project
-  service = google_cloud_run_service.frontend_run.name
-  policy_data = data.google_iam_policy.run_users.policy_data
+  project  = google_cloud_run_service.frontend_run.project
+  service  = google_cloud_run_service.frontend_run.name
+  role     = "roles/run.invoker"
+  member   = each.value
 }
 
-resource "google_cloud_run_service_iam_policy" "controller_run-invoker" {
+resource "google_cloud_run_service_iam_member" "controller_run-invoker" {
+  for_each = local.run_users
+
   location = google_cloud_run_service.controller_run.location
-  project = google_cloud_run_service.controller_run.project
-  service = google_cloud_run_service.controller_run.name
-  policy_data = data.google_iam_policy.run_users.policy_data
+  project  = google_cloud_run_service.controller_run.project
+  service  = google_cloud_run_service.controller_run.name
+  role     = "roles/run.invoker"
+  member   = each.value
 }
 
-resource "google_cloud_run_service_iam_policy" "jobs_run-invoker" {
+resource "google_cloud_run_service_iam_member" "jobs_run-invoker" {
+  for_each = local.run_users
+
   location = google_cloud_run_service.jobs_run.location
-  project = google_cloud_run_service.jobs_run.project
-  service = google_cloud_run_service.jobs_run.name
-  policy_data = data.google_iam_policy.run_users.policy_data
+  project  = google_cloud_run_service.jobs_run.project
+  service  = google_cloud_run_service.jobs_run.name
+  role     = "roles/run.invoker"
+  member   = each.value
 }
