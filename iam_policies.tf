@@ -201,7 +201,7 @@ locals {
   }
 }
 
-resource "google_cloud_run_service_iam_member" "frontend_run-invoker" {
+resource "google_cloud_run_service_iam_member" "frontend_run_invoker" {
   for_each = local.run_users
 
   location = google_cloud_run_service.frontend_run.location
@@ -211,7 +211,7 @@ resource "google_cloud_run_service_iam_member" "frontend_run-invoker" {
   member   = each.value
 }
 
-resource "google_cloud_run_service_iam_member" "controller_run-invoker" {
+resource "google_cloud_run_service_iam_member" "controller_run_invoker" {
   for_each = local.run_users
 
   location = google_cloud_run_service.controller_run.location
@@ -221,7 +221,7 @@ resource "google_cloud_run_service_iam_member" "controller_run-invoker" {
   member   = each.value
 }
 
-resource "google_cloud_run_service_iam_member" "jobs_run-invoker" {
+resource "google_cloud_run_service_iam_member" "jobs_run_invoker" {
   for_each = local.run_users
 
   location = google_cloud_run_service.jobs_run.location
