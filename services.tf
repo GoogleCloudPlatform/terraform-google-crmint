@@ -82,7 +82,7 @@ resource "google_secret_manager_secret" "cloud_db_uri" {
 }
 
 resource "google_secret_manager_secret_version" "cloud_db_uri-latest" {
-  secret = google_secret_manager_secret.cloud_db_uri.name
+  secret      = google_secret_manager_secret.cloud_db_uri.name
   secret_data = local.cloud_db_uri
 }
 
@@ -130,7 +130,7 @@ resource "google_cloud_run_service" "controller_run" {
           "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.connector[0].name
           # Routes only egress to private ip addresses through the VPC Connector.
           "run.googleapis.com/vpc-access-egress" = "private-ranges-only"
-        } : {
+          } : {
           "run.googleapis.com/cloudsql-instances" = google_sql_database_instance.main.connection_name
         }
       )
@@ -179,11 +179,11 @@ resource "google_cloud_run_service" "controller_run" {
           value = random_id.pubsub_verification_token.b64_url
         }
         env {
-          name  = "DATABASE_URI"
+          name = "DATABASE_URI"
           value_from {
             secret_key_ref {
               name = google_secret_manager_secret.cloud_db_uri.secret_id
-              key = "latest"
+              key  = "latest"
             }
           }
         }
@@ -263,7 +263,7 @@ resource "google_cloud_run_service" "jobs_run" {
         }
       }
 
-      timeout_seconds = 900  # 15min
+      timeout_seconds = 900 # 15min
     }
   }
 

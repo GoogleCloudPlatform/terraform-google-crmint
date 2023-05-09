@@ -41,7 +41,7 @@ variable "notification_sender_email" {
 
 variable "iap_brand_id" {
   description = "Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`)."
-  default = null
+  default     = null
 }
 
 variable "iap_support_email" {
@@ -49,7 +49,7 @@ variable "iap_support_email" {
 }
 
 variable "iap_allowed_users" {
-  type = list
+  type = list(any)
 }
 
 
@@ -62,7 +62,7 @@ variable "project_id" {
 
 variable "region" {
   description = "GCP Region"
-  default = "us-east1"
+  default     = "us-east1"
 }
 
 
@@ -71,17 +71,17 @@ variable "region" {
 
 variable "use_vpc" {
   description = "Configures the database with a private IP. Default to true."
-  default = true
+  default     = true
 }
 
 variable "network_project_id" {
   description = "Network GCP project to use. Defaults to `var.project_id`."
-  default = null
+  default     = null
 }
 
 variable "network_region" {
   description = "Network region. Defaults to `var.region`."
-  default = null
+  default     = null
 }
 
 
@@ -90,37 +90,37 @@ variable "network_region" {
 
 variable "database_project_id" {
   description = "Database GCP project to use. Defaults to `var.project_id`."
-  default = null
+  default     = null
 }
 
 variable "database_region" {
   description = "Database region to setup a Cloud SQL instance. Defaults to `var.region`"
-  default = null
+  default     = null
 }
 
 variable "database_tier" {
   description = "Database instance machine tier. Defaults to a small instance."
-  default = "db-g1-small"
+  default     = "db-g1-small"
 }
 
 variable "database_availability_type" {
   description = "Database availability type. Defaults to one zone."
-  default = "ZONAL"
+  default     = "ZONAL"
 }
 
 variable "database_instance_name" {
   description = "Name for the Cloud SQL instance."
-  default = "crmint-3-db"
+  default     = "crmint-3-db"
 }
 
 variable "database_name" {
   description = "Name of the database in your Cloud SQL instance."
-  default = "crmintapp-db"
+  default     = "crmintapp-db"
 }
 
 variable "database_user" {
   description = "Database user name."
-  default = "crmintapp"
+  default     = "crmintapp"
 }
 
 
@@ -129,17 +129,17 @@ variable "database_user" {
 
 variable "frontend_image" {
   description = "Docker image uri (with tag) for the frontend service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
 }
 
 variable "controller_image" {
   description = "Docker image uri (with tag) for the controller service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
 }
 
 variable "jobs_image" {
   description = "Docker image uri (with tag) for the jobs service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 }
 
 
@@ -148,14 +148,14 @@ variable "jobs_image" {
 
 variable "random_suffix" {
   description = "Add random suffix to deployed resources (to allow multiple deployments per project)"
-  type = string
-  default = true
+  type        = string
+  default     = true
 }
 
 variable "goog_bc_deployment_name" {
   description = "This is only set if run via BC/CM"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "labels" {
