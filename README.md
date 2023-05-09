@@ -43,7 +43,7 @@ module "crmint" {
 
   app_title                 = "My Local Custom App"
   notification_sender_email = "me@example.com"
-  
+
   # Google Cloud Platform.
   project_id                = "YOUR_PROJECT_ID"
   region                    = "GCP_REGION"  # e.g. us-east1
