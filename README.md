@@ -84,7 +84,8 @@ Functional examples are included in the
 | database\_tier | Database instance machine tier. Defaults to a small instance. | `string` | `"db-g1-small"` | no |
 | database\_user | Database user name. | `string` | `"crmintapp"` | no |
 | frontend\_image | Docker image uri (with tag) for the frontend service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"` | no |
-| iap\_allowed\_users | n/a | `list` | n/a | yes |
+| goog\_bc\_deployment\_name | This is only set if run via BC/CM | `string` | `""` | no |
+| iap\_allowed\_users | n/a | `list(any)` | n/a | yes |
 | iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `any` | `null` | no |
 | iap\_support\_email | Support email used for configuring IAP | `any` | n/a | yes |
 | jobs\_image | Docker image uri (with tag) for the jobs service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"` | no |
@@ -93,6 +94,7 @@ Functional examples are included in the
 | network\_region | Network region. Defaults to `var.region`. | `any` | `null` | no |
 | notification\_sender\_email | Email address to send notifications to. | `any` | n/a | yes |
 | project\_id | GCP Project ID | `any` | n/a | yes |
+| random\_suffix | Add random suffix to deployed resources (to allow multiple deployments per project) | `string` | `true` | no |
 | region | GCP Region | `string` | `"us-east1"` | no |
 | report\_usage | Report anonymous usage to our analytics to improve the tool. | `bool` | `false` | no |
 | use\_vpc | Configures the database with a private IP. Default to true. | `bool` | `true` | no |
