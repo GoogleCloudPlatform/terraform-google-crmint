@@ -37,16 +37,16 @@ steps:
 
 - id: disable_vpc-init
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n 's/.*@\(.*\).iam.gserviceaccount.com/\1/p') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format='value(name)' | sed 's:.*/::') && cft test run TestDisableVPC --stage init --verbose']
+  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n ''s/.*@\(.*\).iam.gserviceaccount.com/\1/p'') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format=''value(name)'' | sed ''s:.*/::'') && cft test run TestDisableVPC --stage init --verbose']
 - id: disable_vpc-apply
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n 's/.*@\(.*\).iam.gserviceaccount.com/\1/p') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format='value(name)' | sed 's:.*/::') && cft test run TestDisableVPC --stage apply --verbose']
+  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n ''s/.*@\(.*\).iam.gserviceaccount.com/\1/p'') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format=''value(name)'' | sed ''s:.*/::'') && cft test run TestDisableVPC --stage apply --verbose']
 - id: disable_vpc-verify
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n 's/.*@\(.*\).iam.gserviceaccount.com/\1/p') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format='value(name)' | sed 's:.*/::') && cft test run TestDisableVPC --stage verify --verbose']
+  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n ''s/.*@\(.*\).iam.gserviceaccount.com/\1/p'') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format=''value(name)'' | sed ''s:.*/::'') && cft test run TestDisableVPC --stage verify --verbose']
 - id: disable_vpc-teardown
   name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
-  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n 's/.*@\(.*\).iam.gserviceaccount.com/\1/p') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format='value(name)' | sed 's:.*/::') && cft test run TestDisableVPC --stage teardown --verbose']
+  args: ['/bin/bash', '-c', 'export PROJECT_ID=$(gcloud config get core/account | sed -n ''s/.*@\(.*\).iam.gserviceaccount.com/\1/p'') && gcloud services enable iap.googleapis.com --project $PROJECT_ID && export TF_VAR_iap_brand_id=$(gcloud iap oauth-brands list --project $PROJECT_ID --format=''value(name)'' | sed ''s:.*/::'') && cft test run TestDisableVPC --stage teardown --verbose']
 
 tags:
 - 'ci'
