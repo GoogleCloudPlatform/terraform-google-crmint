@@ -61,7 +61,7 @@ resource "google_cloud_run_service" "frontend_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
@@ -201,7 +201,7 @@ resource "google_cloud_run_service" "controller_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
@@ -277,7 +277,7 @@ resource "google_cloud_run_service" "jobs_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
