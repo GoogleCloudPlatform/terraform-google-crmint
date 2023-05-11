@@ -84,7 +84,7 @@ Functional examples are included in the
 | database\_user | Database user name. | `string` | `"crmintapp"` | no |
 | frontend\_image | Docker image uri (with tag) for the frontend service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"` | no |
 | goog\_bc\_deployment\_name | This is only set if run via BC/CM | `string` | `""` | no |
-| iap\_allowed\_users | n/a | `list(string)` | n/a | yes |
+| iap\_allowed\_users | List of user email addresses that should be allowed to use the CRMint UI | `list(string)` | n/a | yes |
 | iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `string` | `null` | no |
 | iap\_support\_email | Support email used for configuring IAP | `string` | n/a | yes |
 | jobs\_image | Docker image uri (with tag) for the jobs service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"` | no |

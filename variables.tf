@@ -54,7 +54,8 @@ variable "iap_support_email" {
 }
 
 variable "iap_allowed_users" {
-  type = list(string)
+  description = "List of user email addresses that should be allowed to use the CRMint UI"
+  type        = list(string)
 }
 
 

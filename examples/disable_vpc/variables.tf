@@ -24,11 +24,6 @@ variable "region" {
   default     = "us-east1"
 }
 
-variable "zone" {
-  description = "GCP Zone"
-  default     = "us-east1-c"
-}
-
 variable "caller_identity" {
   description = "Email of the caller, used to configure IAP."
 }
