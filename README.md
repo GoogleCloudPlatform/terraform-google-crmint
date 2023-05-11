@@ -78,21 +78,21 @@ Functional examples are included in the
 | database\_availability\_type | Database availability type. Defaults to one zone. | `string` | `"ZONAL"` | no |
 | database\_instance\_name | Name for the Cloud SQL instance. | `string` | `"crmint-3-db"` | no |
 | database\_name | Name of the database in your Cloud SQL instance. | `string` | `"crmintapp-db"` | no |
-| database\_project\_id | Database GCP project to use. Defaults to `var.project_id`. | `any` | `null` | no |
-| database\_region | Database region to setup a Cloud SQL instance. Defaults to `var.region` | `any` | `null` | no |
+| database\_project\_id | Database GCP project to use. Defaults to `var.project_id`. | `string` | `null` | no |
+| database\_region | Database region to setup a Cloud SQL instance. Defaults to `var.region` | `string` | `null` | no |
 | database\_tier | Database instance machine tier. Defaults to a small instance. | `string` | `"db-g1-small"` | no |
 | database\_user | Database user name. | `string` | `"crmintapp"` | no |
 | frontend\_image | Docker image uri (with tag) for the frontend service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"` | no |
 | goog\_bc\_deployment\_name | This is only set if run via BC/CM | `string` | `""` | no |
-| iap\_allowed\_users | n/a | `list(any)` | n/a | yes |
-| iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `any` | `null` | no |
-| iap\_support\_email | Support email used for configuring IAP | `any` | n/a | yes |
+| iap\_allowed\_users | n/a | `list(string)` | n/a | yes |
+| iap\_brand\_id | Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`). | `string` | `null` | no |
+| iap\_support\_email | Support email used for configuring IAP | `string` | n/a | yes |
 | jobs\_image | Docker image uri (with tag) for the jobs service | `string` | `"europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"` | no |
 | labels | A set of key/value label pairs to assign to the resources deployed by this blueprint. | `map(string)` | `{}` | no |
-| network\_project\_id | Network GCP project to use. Defaults to `var.project_id`. | `any` | `null` | no |
-| network\_region | Network region. Defaults to `var.region`. | `any` | `null` | no |
-| notification\_sender\_email | Email address to send notifications to. | `any` | n/a | yes |
-| project\_id | GCP Project ID | `any` | n/a | yes |
+| network\_project\_id | Network GCP project to use. Defaults to `var.project_id`. | `string` | `null` | no |
+| network\_region | Network region. Defaults to `var.region`. | `string` | `null` | no |
+| notification\_sender\_email | Email address to send notifications to. | `string` | n/a | yes |
+| project\_id | GCP Project ID | `string` | n/a | yes |
 | random\_suffix | Add random suffix to deployed resources (to allow multiple deployments per project) | `string` | `true` | no |
 | region | GCP Region | `string` | `"us-east1"` | no |
 | report\_usage | Report anonymous usage to our analytics to improve the tool. | `bool` | `false` | no |
