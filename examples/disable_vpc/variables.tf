@@ -21,12 +21,12 @@ variable "project_id" {
 
 variable "region" {
   description = "GCP Region"
-  default = "us-east1"
+  default     = "us-east1"
 }
 
 variable "zone" {
   description = "GCP Zone"
-  default = "us-east1-c"
+  default     = "us-east1-c"
 }
 
 variable "caller_identity" {
