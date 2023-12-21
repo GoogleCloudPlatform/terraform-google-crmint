@@ -15,7 +15,8 @@
  */
 
 module "crmint" {
-  source = "../.."
+  source = "GoogleCloudPlatform/crmint/google"
+version="~> REPLACE-AFTER-RELEASE"
 
   report_usage              = true
   app_title                 = "My Local Custom App"
