@@ -36,8 +36,8 @@ resource "google_logging_metric" "pipeline_status_failed" {
     display_name = "Pipeline Status Failed Metric"
   }
   label_extractors = {
-    "pipeline_id"     = "EXTRACT(jsonPayload.labels.pipeline_id)"
-    "message"         = "EXTRACT(jsonPayload.message)"
+    "pipeline_id" = "EXTRACT(jsonPayload.labels.pipeline_id)"
+    "message"     = "EXTRACT(jsonPayload.message)"
   }
 
   depends_on = [google_project_service.apis]
@@ -62,10 +62,10 @@ resource "google_monitoring_alert_policy" "notify_on_pipeline_status_failed" {
   conditions {
     display_name = "Monitor pipeline errors"
     condition_threshold {
-      filter               = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.pipeline_status_failed.id}\" AND resource.type=cloud_run_revision"
-      duration             = "60s"
-      comparison           = "COMPARISON_GT"
-      threshold_value      = 0.001
+      filter          = "metric.type=\"logging.googleapis.com/user/${google_logging_metric.pipeline_status_failed.id}\" AND resource.type=cloud_run_revision"
+      duration        = "60s"
+      comparison      = "COMPARISON_GT"
+      threshold_value = 0.001
       trigger {
         count = 1
       }

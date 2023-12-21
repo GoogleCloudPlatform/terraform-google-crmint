@@ -21,7 +21,7 @@ locals {
 resource "google_sql_database_instance" "main" {
   deletion_protection = false
 
-  name        = var.random_suffix ? "${var.database_instance_name}-${random_id.suffix.hex}" : var.database_instance_name
+  name = var.random_suffix ? "${var.database_instance_name}-${random_id.suffix.hex}" : var.database_instance_name
 
   database_version = "MYSQL_8_0"
   project          = var.database_project_id != null ? var.database_project_id : var.project_id
@@ -43,7 +43,7 @@ resource "google_sql_database_instance" "main" {
       # Includes this block only if `local.private_network` is set to a non-null value.
       for_each = local.private_network[*]
       content {
-        ipv4_enabled = false
+        ipv4_enabled    = false
         private_network = local.private_network.id
       }
     }

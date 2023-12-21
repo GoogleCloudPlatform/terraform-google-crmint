@@ -46,7 +46,7 @@ resource "google_project_service" "apis" {
 }
 
 resource "google_project_service" "vpcaccess" {
-  count = var.use_vpc ? 1 : 0
+  count    = var.use_vpc ? 1 : 0
   provider = google-beta
 
   project = var.network_project_id != null ? var.network_project_id : var.project_id

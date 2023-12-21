@@ -22,21 +22,21 @@ module "crmint" {
   notification_sender_email = var.caller_identity
 
   # Google Cloud Platform.
-  project_id                = var.project_id
-  region                    = var.region  # e.g. us-east1
-  database_instance_name    = "crmint-3-db"
-  use_vpc                   = false
+  project_id             = var.project_id
+  region                 = var.region # e.g. us-east1
+  database_instance_name = "crmint-3-db"
+  use_vpc                = false
 
   # Docker service images (in case you want to pin to a specific version).
-  frontend_image            = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
-  controller_image          = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
-  jobs_image                = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
+  frontend_image   = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
+  controller_image = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
+  jobs_image       = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 
   # User access management.
-  iap_brand_id              = var.iap_brand_id
-  iap_support_email         = var.caller_identity
-  iap_allowed_users         = [
-                                "serviceAccount:${var.caller_identity}",
-                                # "user:me@example.com",
-                              ]
+  iap_brand_id      = var.iap_brand_id
+  iap_support_email = var.caller_identity
+  iap_allowed_users = [
+    "serviceAccount:${var.caller_identity}",
+    # "user:me@example.com",
+  ]
 }
