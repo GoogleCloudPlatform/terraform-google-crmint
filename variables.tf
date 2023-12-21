@@ -19,6 +19,7 @@
 
 variable "report_usage" {
   description = "Report anonymous usage to our analytics to improve the tool."
+  type        = bool
   default     = false
 }
 
@@ -28,11 +29,13 @@ variable "report_usage" {
 
 variable "app_title" {
   description = "Project name to display in the UI."
+  type        = string
   default     = "CRMint App"
 }
 
 variable "notification_sender_email" {
   description = "Email address to send notifications to."
+  type        = string
 }
 
 
@@ -41,15 +44,18 @@ variable "notification_sender_email" {
 
 variable "iap_brand_id" {
   description = "Existing IAP Brand ID - only INTERNAL TYPE (you can obtain it using this command: `$ gcloud iap oauth-brands list --format='value(name)' | sed 's:.*/::'`)."
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "iap_support_email" {
   description = "Support email used for configuring IAP"
+  type        = string
 }
 
 variable "iap_allowed_users" {
-  type = list
+  description = "Lost of IAP allowed users."
+  type        = list(any)
 }
 
 
@@ -58,11 +64,13 @@ variable "iap_allowed_users" {
 
 variable "project_id" {
   description = "GCP Project ID"
+  type        = string
 }
 
 variable "region" {
   description = "GCP Region"
-  default = "us-east1"
+  type        = string
+  default     = "us-east1"
 }
 
 
@@ -71,17 +79,20 @@ variable "region" {
 
 variable "use_vpc" {
   description = "Configures the database with a private IP. Default to true."
-  default = true
+  type        = bool
+  default     = true
 }
 
 variable "network_project_id" {
   description = "Network GCP project to use. Defaults to `var.project_id`."
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "network_region" {
   description = "Network region. Defaults to `var.region`."
-  default = null
+  type        = string
+  default     = null
 }
 
 
@@ -90,37 +101,44 @@ variable "network_region" {
 
 variable "database_project_id" {
   description = "Database GCP project to use. Defaults to `var.project_id`."
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "database_region" {
   description = "Database region to setup a Cloud SQL instance. Defaults to `var.region`"
-  default = null
+  type        = string
+  default     = null
 }
 
 variable "database_tier" {
   description = "Database instance machine tier. Defaults to a small instance."
-  default = "db-g1-small"
+  type        = string
+  default     = "db-g1-small"
 }
 
 variable "database_availability_type" {
   description = "Database availability type. Defaults to one zone."
-  default = "ZONAL"
+  type        = string
+  default     = "ZONAL"
 }
 
 variable "database_instance_name" {
   description = "Name for the Cloud SQL instance."
-  default = "crmint-3-db"
+  type        = string
+  default     = "crmint-3-db"
 }
 
 variable "database_name" {
   description = "Name of the database in your Cloud SQL instance."
-  default = "crmintapp-db"
+  type        = string
+  default     = "crmintapp-db"
 }
 
 variable "database_user" {
   description = "Database user name."
-  default = "crmintapp"
+  type        = string
+  default     = "crmintapp"
 }
 
 
@@ -129,17 +147,20 @@ variable "database_user" {
 
 variable "frontend_image" {
   description = "Docker image uri (with tag) for the frontend service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
+  type        = string
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/frontend:master"
 }
 
 variable "controller_image" {
   description = "Docker image uri (with tag) for the controller service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
+  type        = string
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/controller:master"
 }
 
 variable "jobs_image" {
   description = "Docker image uri (with tag) for the jobs service"
-  default = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
+  type        = string
+  default     = "europe-docker.pkg.dev/instant-bqml-demo-environment/crmint/jobs:master"
 }
 
 
@@ -148,14 +169,14 @@ variable "jobs_image" {
 
 variable "random_suffix" {
   description = "Add random suffix to deployed resources (to allow multiple deployments per project)"
-  type = string
-  default = true
+  type        = string
+  default     = true
 }
 
 variable "goog_bc_deployment_name" {
   description = "This is only set if run via BC/CM"
-  type = string
-  default = ""
+  type        = string
+  default     = ""
 }
 
 variable "labels" {

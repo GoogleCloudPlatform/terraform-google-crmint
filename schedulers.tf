@@ -18,11 +18,11 @@ resource "google_cloud_scheduler_job" "heartbeat" {
   name        = var.random_suffix ? "crmint-heartbeat-${random_id.suffix.hex}" : "crmint-heartbeat"
   description = "Triggers scheduled pipeline runs - Managed by ${local.managed_by_desc}"
 
-  schedule    = "* * * * *"
-  project     = var.project_id
+  schedule = "* * * * *"
+  project  = var.project_id
 
   pubsub_target {
-    topic_name = lookup(google_pubsub_topic.topics, "crmint-3-start-pipeline").id
+    topic_name = google_pubsub_topic.topics["crmint-3-start-pipeline"].id
     data       = base64encode("{\"pipeline_ids\": \"scheduled\"}")
     attributes = {
       start_time = 0

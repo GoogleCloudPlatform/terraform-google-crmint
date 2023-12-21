@@ -28,7 +28,7 @@ resource "google_iap_brand" "default" {
 
 resource "google_iap_client" "default" {
   display_name = "Test Client"
-  brand        =  var.iap_brand_id == null ? google_iap_brand.default[0].name : "projects/${var.project_id}/brands/${var.iap_brand_id}"
+  brand        = var.iap_brand_id == null ? google_iap_brand.default[0].name : "projects/${var.project_id}/brands/${var.iap_brand_id}"
 }
 
 resource "google_project_service_identity" "iap_sa" {

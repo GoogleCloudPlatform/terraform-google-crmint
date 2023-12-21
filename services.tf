@@ -61,7 +61,7 @@ resource "google_cloud_run_service" "frontend_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
@@ -75,14 +75,14 @@ locals {
 resource "google_secret_manager_secret" "cloud_db_uri" {
   secret_id = "cloud_db_uri"
   replication {
-    automatic = true
+    auto {}
   }
 
   depends_on = [google_project_service.apis]
 }
 
 resource "google_secret_manager_secret_version" "cloud_db_uri-latest" {
-  secret = google_secret_manager_secret.cloud_db_uri.name
+  secret      = google_secret_manager_secret.cloud_db_uri.name
   secret_data = local.cloud_db_uri
 }
 
@@ -130,7 +130,7 @@ resource "google_cloud_run_service" "controller_run" {
           "run.googleapis.com/vpc-access-connector" = google_vpc_access_connector.connector[0].name
           # Routes only egress to private ip addresses through the VPC Connector.
           "run.googleapis.com/vpc-access-egress" = "private-ranges-only"
-        } : {
+          } : {
           "run.googleapis.com/cloudsql-instances" = google_sql_database_instance.main.connection_name
         }
       )
@@ -179,11 +179,11 @@ resource "google_cloud_run_service" "controller_run" {
           value = random_id.pubsub_verification_token.b64_url
         }
         env {
-          name  = "DATABASE_URI"
+          name = "DATABASE_URI"
           value_from {
             secret_key_ref {
               name = google_secret_manager_secret.cloud_db_uri.secret_id
-              key = "latest"
+              key  = "latest"
             }
           }
         }
@@ -201,7 +201,7 @@ resource "google_cloud_run_service" "controller_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
@@ -263,7 +263,7 @@ resource "google_cloud_run_service" "jobs_run" {
         }
       }
 
-      timeout_seconds = 900  # 15min
+      timeout_seconds = 900 # 15min
     }
   }
 
@@ -277,7 +277,7 @@ resource "google_cloud_run_service" "jobs_run" {
   # Avoids a redeploy each time "run.googleapis.com/operation-id" changes.
   lifecycle {
     ignore_changes = [
-      metadata.0.annotations,
+      metadata[0].annotations,
     ]
   }
 
@@ -287,12 +287,12 @@ resource "google_cloud_run_service" "jobs_run" {
 resource "google_cloudbuild_worker_pool" "private" {
   count = var.use_vpc ? 1 : 0
 
-  name = "crmint-private-pool"
+  name     = "crmint-private-pool"
   location = var.region
 
   worker_config {
-    disk_size_gb = 100
-    machine_type = "e2-standard-2"
+    disk_size_gb   = 100
+    machine_type   = "e2-standard-2"
     no_external_ip = var.use_vpc ? true : false
   }
 
@@ -313,7 +313,7 @@ resource "google_cloudbuild_worker_pool" "private" {
 
 # Local variables are used to simplify the definition of outputs.
 locals {
-  migrate_image = var.controller_image
+  migrate_image         = var.controller_image
   migrate_sql_conn_name = google_sql_database_instance.main.connection_name
-  pool = var.use_vpc ? google_cloudbuild_worker_pool.private[0].id : "default"
+  pool                  = var.use_vpc ? google_cloudbuild_worker_pool.private[0].id : "default"
 }
