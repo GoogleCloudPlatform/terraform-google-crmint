@@ -2,10 +2,10 @@
 
 ## Description
 ### tagline
-Terraform Module to deploy the [CRMint application](https://google.github.io/crmint).
+Terraform Module to deploy the [CRMint application](https://google-marketing-solutions.github.io/crmint/).
 
 ### detailed
-This module configures your GCP project to host a [CRMint application](https://google.github.io/crmint).
+This module configures your GCP project to host a [CRMint application](https://google-marketing-solutions.github.io/crmint/).
 
 The resources/services/activations/deletions that this module will create/trigger are:
 
@@ -30,7 +30,7 @@ The resources/services/activations/deletions that this module will create/trigge
 To deploy this blueprint you must have an active billing account and billing permissions.
 
 ## Documentation
-- [CRMint application](https://google.github.io/crmint) built by gTech Professional Services from Google Ads (**not an official product**).
+- [CRMint application](https://google-marketing-solutions.github.io/crmint/) built by gTech Professional Services from Google Ads (**not an official product**).
 
 ## Usage
 
