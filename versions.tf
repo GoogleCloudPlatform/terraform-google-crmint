@@ -32,7 +32,7 @@ terraform {
   }
 
   provider_meta "google" {
-    module_name = "blueprints/terraform/crmint/v0.0.1"
+    module_name = "blueprints/terraform/crmint/v0.1.0"
   }
 }
 
